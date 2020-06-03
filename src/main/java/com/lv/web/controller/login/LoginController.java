@@ -26,8 +26,6 @@ public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserService userService;
-    @Autowired
-    private RedisService redisService;
 
     /**
      * 网页端登录
@@ -46,8 +44,8 @@ public class LoginController {
             if (validimage != null && validimage.equalsIgnoreCase(loginForm.getValidimage())) {
                 //查询当前用户
                 String mobile = loginForm.getUserName();
-                User user = userService.getUserByUserName(mobile);
-                if (user != null && user.getPassWord().endsWith(loginForm.getPwd())) {
+                User user = userService.getUserByMobile(mobile);
+                if (user != null && user.getPwd().endsWith(loginForm.getPwd())) {
                     //保存用户信息
                     request.getSession().setAttribute("currentUserInfo", user);
                     String sessionId = request.getParameter("sessionId");

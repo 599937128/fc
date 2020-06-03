@@ -10,7 +10,7 @@ public interface UserService {
      * @param userName
      * @return
      */
-    User getUserByUserName(String userName);
+    User getUserByMobile(String userName);
 
     /**
      * 新增用户信息
