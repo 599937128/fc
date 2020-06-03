@@ -2,9 +2,9 @@ server:
   port: 8089
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/oatest?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: root
+    url: jdbc:mysql://bdm7218602.my3w.com/bdm7218602?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: bdm7218602_db
+    password: Pc951201
       druid:
         initial-size: 5
         min-idle: 5
@@ -15,18 +15,18 @@ spring:
         validation-query: SELECT 1 FROM DUAL
         test-while-idle: true
     driver-class-name: com.mysql.jdbc.Driver
-    redis:
-      host: 127.0.0.1
-      port: 6379
-      password:
-      jedis:
-        pool:
-          max-active: 8
-          max-wait: -1
-          max-idle: 500
-          min-idle: 0
-      lettuce:
-        shutdown-timeout: 0
+#    redis:
+#      host: 127.0.0.1
+#      port: 6379
+#      password:
+#      jedis:
+#        pool:
+#          max-active: 8
+#          max-wait: -1
+#          max-idle: 500
+#          min-idle: 0
+#      lettuce:
+#        shutdown-timeout: 0
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.lv.web.dto

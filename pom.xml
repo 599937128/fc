@@ -77,6 +77,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.61</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
