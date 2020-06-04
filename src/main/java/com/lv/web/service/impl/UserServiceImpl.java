@@ -3,6 +3,8 @@ package com.lv.web.service.impl;
 import com.lv.web.dao.UserMapper;
 import com.lv.web.dto.user.User;
 import com.lv.web.service.UserService;
+import com.lv.web.util.TimeUtil;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByMobile(String mobile) {
-        User user = new User();
-        user.setMobile(mobile);
-        userMapper.queryAll(user);
-        return null;
+        return userMapper.queryByMobile(mobile);
     }
 
     @Override
     public void addUser(User user) {
+        user.setCreateTime(TimeUtil.dateToTime());
+        user.setPwd(DigestUtils.md5Hex(user.getPwd()).toUpperCase());
         userMapper.insert(user);
     }
 

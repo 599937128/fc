@@ -4,8 +4,8 @@ import com.lv.web.constant.CommonsKey;
 import com.lv.web.dto.login.LoginForm;
 import com.lv.web.dto.user.User;
 import com.lv.web.enums.StatusEnum;
-import com.lv.web.service.RedisService;
 import com.lv.web.service.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class LoginController {
                 //查询当前用户
                 String mobile = loginForm.getUserName();
                 User user = userService.getUserByMobile(mobile);
-                if (user != null && user.getPwd().endsWith(loginForm.getPwd())) {
+                if (user != null && user.getPwd().equals(DigestUtils.md5Hex(loginForm.getPwd()).toUpperCase())) {
                     //保存用户信息
                     request.getSession().setAttribute("currentUserInfo", user);
                     String sessionId = request.getParameter("sessionId");

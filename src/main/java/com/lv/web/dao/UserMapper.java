@@ -58,4 +58,12 @@ public interface UserMapper {
      */
     int deleteById(Integer id);
 
+    /**
+     * 通过手机号获取用户数据
+     *
+     * @param mobile
+     * @return 实例对象
+     */
+    User queryByMobile(String mobile);
+
 }
