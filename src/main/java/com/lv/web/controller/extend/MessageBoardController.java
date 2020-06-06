@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,9 +69,38 @@ public class MessageBoardController {
         try {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("currentUserInfo");
-            tMessageBoardService.queryAllByUserId(user.getId());
+            List<MessageBoard> messageBoards = tMessageBoardService.queryAllByUserId(user.getId());
+            result.put(CommonsKey.DATA, messageBoards);
             result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
-            result.put(CommonsKey.MSG, "留言成功");
+            result.put(CommonsKey.MSG, "获取留言列表成功");
+            return result;
+        } catch (Exception e) {
+            logger.error("获取留言列表成功失败---{}", e);
+            e.printStackTrace();
+            result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
+            result.put(CommonsKey.MSG, "获取留言列表成功失败");
+        }
+        return result;
+    }
+
+    /**
+     * 删除留言
+     *
+     * @param messageBoard
+     * @return
+     */
+    @PostMapping("/message/del")
+    public Map delMessage(@Valid @RequestBody MessageBoard messageBoard) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            boolean deleteByLeaveUserId = tMessageBoardService.deleteByLeaveUserId(messageBoard.getLeaveUserId());
+            if (deleteByLeaveUserId) {
+                result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
+                result.put(CommonsKey.MSG, "删除留言成功");
+            } else {
+                result.put(CommonsKey.CODE, StatusEnum.FAIL.getStatus());
+                result.put(CommonsKey.MSG, "删除留言失败");
+            }
             return result;
         } catch (Exception e) {
             logger.error("留言失败---{}", e);
@@ -80,5 +110,6 @@ public class MessageBoardController {
         }
         return result;
     }
+
 
 }

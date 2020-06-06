@@ -54,6 +54,14 @@ public interface MessageBoardService {
     boolean deleteById(Integer id);
 
     /**
+     * 通过用户留言id删除数据
+     *
+     * @param leaveUserId
+     * @return 是否成功
+     */
+    boolean deleteByLeaveUserId(Integer leaveUserId);
+
+    /**
      * 根据用户id查询留言信息
      *
      * @param userId 查询起始位置

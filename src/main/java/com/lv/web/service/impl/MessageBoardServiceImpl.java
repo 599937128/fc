@@ -35,7 +35,7 @@ public class MessageBoardServiceImpl implements MessageBoardService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -76,6 +76,11 @@ public class MessageBoardServiceImpl implements MessageBoardService {
     @Override
     public boolean deleteById(Integer id) {
         return this.messageBoardMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public boolean deleteByLeaveUserId(Integer leaveUserId) {
+        return this.messageBoardMapper.deleteByLeaveUserId(leaveUserId) > 0;
     }
 
     @Override
