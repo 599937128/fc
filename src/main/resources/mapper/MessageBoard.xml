@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.web.dao.MessageBoardMapper">
+
+    <resultMap type="com.lv.web.dto.messageboard.MessageBoard" id="TMessageBoardMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="userId" column="USER_ID" jdbcType="INTEGER"/>
+        <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="VARCHAR"/>
+        <result property="headImgId" column="HEAD_IMG_ID" jdbcType="VARCHAR"/>
+        <result property="leaveUserId" column="LEAVE_USER_ID" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TMessageBoardMap">
+        select
+          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+        from T_MESSAGE_BOARD
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TMessageBoardMap">
+        select
+          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+        from T_MESSAGE_BOARD
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TMessageBoardMap">
+        select
+        ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+        from T_MESSAGE_BOARD
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="userId != null">
+                and USER_ID = #{userId}
+            </if>
+            <if test="content != null and content != ''">
+                and CONTENT = #{content}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and CREATE_TIME = #{createTime}
+            </if>
+            <if test="headImgId != null and headImgId != ''">
+                and HEAD_IMG_ID = #{headImgId}
+            </if>
+            <if test="leaveUserId != null">
+                and LEAVE_USER_ID = #{leaveUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into T_MESSAGE_BOARD(USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID,LEAVE_USER_ID)
+        values (#{userId}, #{content}, #{createTime}, #{headImgId}, #{leaveUserId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update T_MESSAGE_BOARD
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId},
+            </if>
+            <if test="content != null and content != ''">
+                CONTENT = #{content},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="headImgId != null and headImgId != ''">
+                HEAD_IMG_ID = #{headImgId},
+            </if>
+            <if test="leaveUserId != null">
+                and LEAVE_USER_ID = #{leaveUserId}
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from T_MESSAGE_BOARD where ID = #{id}
+    </delete>
+
+    <delete id="deleteByLeaveUserId">
+        delete from T_MESSAGE_BOARD where LEAVE_USER_ID = #{leaveUserId}
+    </delete>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByUserId" resultMap="TMessageBoardMap">
+        select
+          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+        from T_MESSAGE_BOARD where USER_ID = #{userId}
+        order by CREATE_TIME
+    </select>
+
+</mapper>

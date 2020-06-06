@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lv.web.dao.UserMapper">
+
+    <resultMap type="com.lv.web.dto.user.User" id="TUserMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="mobile" column="MOBILE" jdbcType="VARCHAR"/>
+        <result property="pwd" column="PWD" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TUserMap">
+        select
+          ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_ID
+        from T_USER
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TUserMap">
+        select
+          ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_ID
+        from T_USER
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TUserMap">
+        select
+        ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_ID
+        from T_USER
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME = #{name}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and MOBILE = #{mobile}
+            </if>
+            <if test="pwd != null and pwd != ''">
+                and PWD = #{pwd}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into T_USER(NAME, MOBILE, PWD, CREATE_TIME , HEAD_IMG_ID)
+        values (#{name}, #{mobile}, #{pwd}, #{createTime}, #{headImgId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update T_USER
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                NAME = #{name},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                MOBILE = #{mobile},
+            </if>
+            <if test="pwd != null and pwd != ''">
+                PWD = #{pwd},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="headImgId != null and headImgId != ''">
+                HEAD_IMG_ID = #{headImgId},
+            </if>
+        </trim>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from T_USER where ID = #{id}
+    </delete>
+
+    <!--查询指定行数据-->
+    <select id="queryByMobile" parameterType="string" resultMap="TUserMap">
+        select
+          ID, NAME, MOBILE, PWD, CREATE_TIME
+        from T_USER
+        where MOBILE = #{mobile}
+    </select>
+
+</mapper>
