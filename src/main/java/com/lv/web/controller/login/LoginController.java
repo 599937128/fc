@@ -40,7 +40,7 @@ public class LoginController {
         Map<String, Object> result = new HashMap<>();
         try {
             //查询当前用户
-            String mobile = loginForm.getUserName();
+            String mobile = loginForm.getMobile();
             User user = userService.getUserByMobile(mobile);
             if (user != null && user.getPwd().equals(DigestUtils.md5Hex(loginForm.getPwd()).toUpperCase())) {
                 //保存用户信息

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/user/register")
-    public Map register(@RequestBody User user) {
+    public Map register(@Valid @RequestBody User user) {
         Map<String, Object> result = new HashMap<>();
         try {
             User userByMobile = userService.getUserByMobile(user.getMobile());
@@ -49,6 +50,29 @@ public class UserController {
             e.printStackTrace();
             result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
             result.put(CommonsKey.MSG, "注册失败");
+        }
+        return result;
+    }
+
+    /**
+     * 用户更新
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping("/user/update")
+    public Map updateUser(@Valid @RequestBody User user) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            userService.updateUser(user);
+            result.put(CommonsKey.CODE, StatusEnum.FAIL.getStatus());
+            result.put(CommonsKey.MSG, "该手机号已经被注册");
+            return result;
+        } catch (Exception e) {
+            logger.error("更新用户信息失败---{}", e);
+            e.printStackTrace();
+            result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
+            result.put(CommonsKey.MSG, "更新用户信息失败");
         }
         return result;
     }

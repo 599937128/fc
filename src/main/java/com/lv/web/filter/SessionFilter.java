@@ -25,7 +25,8 @@ public class SessionFilter implements Filter {
             "/web/getSmCode",
             "/web/logout",
             "/toLogin",
-            "/kaptcha/default"
+            "/kaptcha/default",
+            "/user/register"
     };
 
     @Override
@@ -50,8 +51,8 @@ public class SessionFilter implements Filter {
         if (isNeedCheck(uri)) {
             HttpSession session = request.getSession();
             Map<String, Object> result = new HashMap<>();
-            User opUser = (User) session.getAttribute("");
-            if (opUser == null) {
+            User user = (User) session.getAttribute("currentUserInfo");
+            if (user == null) {
                 result.put(CommonsKey.CODE, "10300");
                 result.put(CommonsKey.MSG, "登录已过期，请重新登录");
                 outPrint(response, JSONObject.toJSONString(result));

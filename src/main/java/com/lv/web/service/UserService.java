@@ -27,4 +27,12 @@ public interface UserService {
     void del(String id);
 
 
+    /**
+     * 更新用户信息
+     *
+     * @param user
+     */
+    void updateUser(User user);
+
+
 }

@@ -8,7 +8,7 @@ public class LoginForm {
     /**
      * 登陆名
      */
-    private String userName;
+    private String mobile;
     /**
      * 图片验证码
      */
