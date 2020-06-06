@@ -31,3 +31,7 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.lv.web.dto
 
+cros:
+  server:
+    ip: http://127.0.0.1:8089
+

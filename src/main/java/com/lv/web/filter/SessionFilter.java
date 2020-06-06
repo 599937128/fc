@@ -16,18 +16,16 @@ import java.util.Map;
 public class SessionFilter implements Filter {
 
 
-    @Value("${spring.application.name}")
-    private String serviceId;
     //跨域处理IP(根据服务器改变IP)
     @Value("${cros.server.ip}")
     private String serverIp;
     //不需要过滤的访问路径
     String[] noCheckUrls = new String[]{
-            "/web/login.action",
-            "/web/getSmCode.action",
-            "/web/logout.action",
-            "/toLogin.action",
-            "/kaptcha/default.action"
+            "/web/login",
+            "/web/getSmCode",
+            "/web/logout",
+            "/toLogin",
+            "/kaptcha/default"
     };
 
     @Override

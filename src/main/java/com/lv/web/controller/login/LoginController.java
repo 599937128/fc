@@ -39,26 +39,19 @@ public class LoginController {
     public Map login(HttpServletRequest request, @RequestBody LoginForm loginForm) {
         Map<String, Object> result = new HashMap<>();
         try {
-            String validimage = (String) request.getSession().getAttribute("kaptchaSessionKey");
-            // 密码登录
-            if (validimage != null && validimage.equalsIgnoreCase(loginForm.getValidimage())) {
-                //查询当前用户
-                String mobile = loginForm.getUserName();
-                User user = userService.getUserByMobile(mobile);
-                if (user != null && user.getPwd().equals(DigestUtils.md5Hex(loginForm.getPwd()).toUpperCase())) {
-                    //保存用户信息
-                    request.getSession().setAttribute("currentUserInfo", user);
-                    String sessionId = request.getParameter("sessionId");
-                    result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
-                    result.put(CommonsKey.DATA, user);
-                    result.put(CommonsKey.MSG, "登录成功");
-                } else {
-                    result.put(CommonsKey.CODE, StatusEnum.UNAUTHORIZED.getStatus());
-                    result.put(CommonsKey.MSG, "用户名或密码错误");
-                }
+            //查询当前用户
+            String mobile = loginForm.getUserName();
+            User user = userService.getUserByMobile(mobile);
+            if (user != null && user.getPwd().equals(DigestUtils.md5Hex(loginForm.getPwd()).toUpperCase())) {
+                //保存用户信息
+                request.getSession().setAttribute("currentUserInfo", user);
+                String sessionId = request.getParameter("sessionId");
+                result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
+                result.put(CommonsKey.DATA, user);
+                result.put(CommonsKey.MSG, "登录成功");
             } else {
                 result.put(CommonsKey.CODE, StatusEnum.UNAUTHORIZED.getStatus());
-                result.put(CommonsKey.MSG, "图片验证码错误");
+                result.put(CommonsKey.MSG, "用户名或密码错误");
             }
         } catch (Exception e) {
             logger.error("登陆异常：", e);

@@ -34,9 +34,15 @@ public class UserController {
     public Map register(@RequestBody User user) {
         Map<String, Object> result = new HashMap<>();
         try {
-            userService.addUser(user);
-            result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
-            result.put(CommonsKey.MSG, "注册成功");
+            User userByMobile = userService.getUserByMobile(user.getMobile());
+            if (null == userByMobile) {
+                userService.addUser(user);
+                result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
+                result.put(CommonsKey.MSG, "注册成功");
+            } else {
+                result.put(CommonsKey.CODE, StatusEnum.FAIL.getStatus());
+                result.put(CommonsKey.MSG, "该手机号已经被注册");
+            }
             return result;
         } catch (Exception e) {
             logger.error("注册失败---{}", e);
