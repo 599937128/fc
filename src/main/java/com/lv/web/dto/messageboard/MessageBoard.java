@@ -2,6 +2,7 @@ package com.lv.web.dto.messageboard;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,6 +28,7 @@ public class MessageBoard implements Serializable {
     /**
      * 留言内容
      */
+    @NotNull(message = "留言内容不能为空")
     private String content;
 
     /**

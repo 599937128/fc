@@ -49,7 +49,7 @@ public class MessageBoardController {
             result.put(CommonsKey.MSG, "留言成功");
             return result;
         } catch (Exception e) {
-            logger.error("留言失败---{}", e);
+            logger.error("留言失败", e);
             e.printStackTrace();
             result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
             result.put(CommonsKey.MSG, "留言失败");
@@ -75,7 +75,7 @@ public class MessageBoardController {
             result.put(CommonsKey.MSG, "获取留言列表成功");
             return result;
         } catch (Exception e) {
-            logger.error("获取留言列表成功失败---{}", e);
+            logger.error("获取留言列表成功失败", e);
             e.printStackTrace();
             result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
             result.put(CommonsKey.MSG, "获取留言列表成功失败");
@@ -103,7 +103,7 @@ public class MessageBoardController {
             }
             return result;
         } catch (Exception e) {
-            logger.error("留言失败---{}", e);
+            logger.error("留言失败", e);
             e.printStackTrace();
             result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
             result.put(CommonsKey.MSG, "留言失败");

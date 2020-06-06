@@ -34,5 +34,13 @@ public interface UserService {
      */
     void updateUser(User user);
 
+    /**
+     * 根据用户id获取用户信息
+     *
+     * @param id
+     * @return
+     */
+    User getUserById(Integer id);
+
 
 }
