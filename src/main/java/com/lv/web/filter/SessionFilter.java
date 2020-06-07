@@ -26,7 +26,9 @@ public class SessionFilter implements Filter {
             "/web/logout",
             "/toLogin",
             "/kaptcha/default",
-            "/user/register"
+            "/user/register",
+            "/message/list",
+            "message/leave"
     };
 
     @Override
@@ -37,15 +39,14 @@ public class SessionFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Origin", serverIp);
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET");
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin,No-Cache, X-Requested-With, If-Modified-Since, Content-Length, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With, userId, token, json");
-
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            return;
-        }
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+//            return;
+//        }
 
         String uri = request.getRequestURI();
         if (isNeedCheck(uri)) {

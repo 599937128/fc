@@ -23,7 +23,6 @@ public class MessageBoard implements Serializable {
     /**
      * 被留言的用户id
      */
-    @NotNull(message = "被留言的用户不能为空")
     private Integer userId;
 
     /**
@@ -43,8 +42,8 @@ public class MessageBoard implements Serializable {
     private String headImgId;
 
     /**
-     * 留言用户的id
+     * 手机
      */
-    private Integer leaveUserId;
+    private String mobile;
 
 }

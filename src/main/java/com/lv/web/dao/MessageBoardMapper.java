@@ -65,20 +65,21 @@ public interface MessageBoardMapper {
      */
     int deleteById(Integer id);
 
-    /**
-     * 根据留言id删除留言信息
-     *
-     * @param leaveUserId 留言用户id
-     * @return 影响行数
-     */
-    int deleteByLeaveUserId(@Param("leaveUserId") int leaveUserId);
 
     /**
      * 获取被留言用户的留言信息
      *
-     * @param userId 查询起始位置
+     * @param userId
      * @return 对象列表
      */
     List<MessageBoard> queryAllByUserId(@Param("userId") int userId);
+
+    /**
+     * 获取留言列表信息
+     *
+     * @param
+     * @return 对象列表
+     */
+    List<MessageBoard> getMessageList();
 
 }

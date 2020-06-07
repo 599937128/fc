@@ -33,5 +33,5 @@ mybatis:
 
 cros:
   server:
-    ip: http://127.0.0.1:8089
+    ip: http://192.168.43.250
 

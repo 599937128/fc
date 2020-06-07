@@ -8,13 +8,12 @@
         <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
         <result property="createTime" column="CREATE_TIME" jdbcType="VARCHAR"/>
         <result property="headImgId" column="HEAD_IMG_ID" jdbcType="VARCHAR"/>
-        <result property="leaveUserId" column="LEAVE_USER_ID" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TMessageBoardMap">
         select
-          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID
         from T_MESSAGE_BOARD
         where ID = #{id}
     </select>
@@ -22,7 +21,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TMessageBoardMap">
         select
-          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+          ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID
         from T_MESSAGE_BOARD
         limit #{offset}, #{limit}
     </select>
@@ -30,7 +29,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TMessageBoardMap">
         select
-        ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
+        ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID
         from T_MESSAGE_BOARD
         <where>
             <if test="id != null">
@@ -48,16 +47,13 @@
             <if test="headImgId != null and headImgId != ''">
                 and HEAD_IMG_ID = #{headImgId}
             </if>
-            <if test="leaveUserId != null">
-                and LEAVE_USER_ID = #{leaveUserId}
-            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into T_MESSAGE_BOARD(USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID,LEAVE_USER_ID)
-        values (#{userId}, #{content}, #{createTime}, #{headImgId}, #{leaveUserId})
+        insert into T_MESSAGE_BOARD(CONTENT, CREATE_TIME, HEAD_IMG_ID, USER_ID)
+        values (#{content}, #{createTime}, #{headImgId}, #{userId})
     </insert>
 
     <!--通过主键修改数据-->
@@ -76,9 +72,6 @@
             <if test="headImgId != null and headImgId != ''">
                 HEAD_IMG_ID = #{headImgId},
             </if>
-            <if test="leaveUserId != null">
-                and LEAVE_USER_ID = #{leaveUserId}
-            </if>
         </set>
         where ID = #{id}
     </update>
@@ -88,16 +81,19 @@
         delete from T_MESSAGE_BOARD where ID = #{id}
     </delete>
 
-    <delete id="deleteByLeaveUserId">
-        delete from T_MESSAGE_BOARD where LEAVE_USER_ID = #{leaveUserId}
-    </delete>
 
-    <!--查询指定行数据-->
     <select id="queryAllByUserId" resultMap="TMessageBoardMap">
         select
           ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID, LEAVE_USER_ID
         from T_MESSAGE_BOARD where USER_ID = #{userId}
         order by CREATE_TIME
     </select>
+
+    <select id="getMessageList" resultMap="TMessageBoardMap">
+        select
+        ID, USER_ID, CONTENT, CREATE_TIME, HEAD_IMG_ID
+        from T_MESSAGE_BOARD B left join T_USER U on B.USER_ID = U.ID
+    </select>
+
 
 </mapper>

@@ -79,13 +79,11 @@ public class MessageBoardServiceImpl implements MessageBoardService {
         return this.messageBoardMapper.deleteById(id) > 0;
     }
 
-    @Override
-    public boolean deleteByLeaveUserId(Integer leaveUserId) {
-        return this.messageBoardMapper.deleteByLeaveUserId(leaveUserId) > 0;
-    }
+
 
     @Override
-    public List<MessageBoard> queryAllByUserId(int userId) {
-        return messageBoardMapper.queryAllByUserId(userId);
+    public List<MessageBoard> getMessageList() {
+        messageBoardMapper.getMessageList();
+        return null;
     }
 }

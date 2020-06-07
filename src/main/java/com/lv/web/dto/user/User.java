@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 使用lombok 简化代码
+ */
 @Data
 public class User {
 

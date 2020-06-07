@@ -9,17 +9,13 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/")
 public class LoginController {
 
@@ -35,7 +31,6 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
-    @ResponseBody
     public Map login(HttpServletRequest request, @RequestBody LoginForm loginForm) {
         Map<String, Object> result = new HashMap<>();
         try {
@@ -45,7 +40,6 @@ public class LoginController {
             if (user != null && user.getPwd().equals(DigestUtils.md5Hex(loginForm.getPwd()).toUpperCase())) {
                 //保存用户信息
                 request.getSession().setAttribute("currentUserInfo", user);
-                String sessionId = request.getParameter("sessionId");
                 result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
                 result.put(CommonsKey.DATA, user);
                 result.put(CommonsKey.MSG, "登录成功");
@@ -62,27 +56,25 @@ public class LoginController {
     }
 
     /**
-     * 跳转到登陆页面
-     *
-     * @return
-     */
-    @RequestMapping("/toLogin")
-    public String toLogin() {
-        return "login/index";
-    }
-
-    /**
      * 退出
      *
      * @param request
      * @return
-     * @throws Exception
      */
     @RequestMapping(value = "/web/logout")
-    public String logout(HttpServletRequest request) throws Exception {
-        // 清空Session
-        request.getSession().invalidate();
-        return "redirect:web/toLogin.action";
+    public Map logout(HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            // 删除session中的用户信息
+            request.getSession().invalidate();
+            result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
+            result.put(CommonsKey.MSG, "退出成功");
+        } catch (Exception e) {
+            logger.error("登陆异常：", e);
+            result.put(CommonsKey.CODE, StatusEnum.DISPOSE_FAILED.getStatus());
+            result.put(CommonsKey.MSG, "退出失败");
+        }
+        return result;
     }
 
 }
