@@ -41,9 +41,12 @@ public class MessageBoardController {
      * @return
      */
     @PostMapping("/message/leave")
-    public Map leaveMessage(@Valid @RequestBody MessageBoard messageBoard) {
+    public Map leaveMessage(HttpServletRequest request, @Valid @RequestBody MessageBoard messageBoard) {
         Map<String, Object> result = new HashMap<>();
         try {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("currentUserInfo");
+            messageBoard.setLeaveUserId(user.getId());
             tMessageBoardService.insert(messageBoard);
             result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
             result.put(CommonsKey.MSG, "留言成功");
@@ -93,13 +96,18 @@ public class MessageBoardController {
     public Map delMessage(@Valid @RequestBody MessageBoard messageBoard) {
         Map<String, Object> result = new HashMap<>();
         try {
-            boolean deleteByLeaveUserId = tMessageBoardService.deleteByLeaveUserId(messageBoard.getLeaveUserId());
-            if (deleteByLeaveUserId) {
-                result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
-                result.put(CommonsKey.MSG, "删除留言成功");
-            } else {
+            if (null == messageBoard.getLeaveUserId()) {
                 result.put(CommonsKey.CODE, StatusEnum.FAIL.getStatus());
-                result.put(CommonsKey.MSG, "删除留言失败");
+                result.put(CommonsKey.MSG, "非法操作");
+            } else {
+                boolean deleteByLeaveUserId = tMessageBoardService.deleteByLeaveUserId(messageBoard.getLeaveUserId());
+                if (deleteByLeaveUserId) {
+                    result.put(CommonsKey.CODE, StatusEnum.SUCCESS.getStatus());
+                    result.put(CommonsKey.MSG, "删除留言成功");
+                } else {
+                    result.put(CommonsKey.CODE, StatusEnum.FAIL.getStatus());
+                    result.put(CommonsKey.MSG, "删除留言失败");
+                }
             }
             return result;
         } catch (Exception e) {

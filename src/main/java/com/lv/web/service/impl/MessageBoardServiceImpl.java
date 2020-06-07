@@ -3,10 +3,10 @@ package com.lv.web.service.impl;
 import com.lv.web.dao.MessageBoardMapper;
 import com.lv.web.dto.messageboard.MessageBoard;
 import com.lv.web.service.MessageBoardService;
+import com.lv.web.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -51,6 +51,7 @@ public class MessageBoardServiceImpl implements MessageBoardService {
      */
     @Override
     public MessageBoard insert(MessageBoard messageBoard) {
+        messageBoard.setCreateTime(TimeUtil.dateToTime());
         this.messageBoardMapper.insert(messageBoard);
         return messageBoard;
     }

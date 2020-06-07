@@ -23,6 +23,7 @@ public class MessageBoard implements Serializable {
     /**
      * 被留言的用户id
      */
+    @NotNull(message = "被留言的用户不能为空")
     private Integer userId;
 
     /**
