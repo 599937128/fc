@@ -45,7 +45,7 @@ public class MessageBoardController {
      * @return
      */
     @PostMapping("/message/leave")
-    public Map leaveMessage(HttpServletRequest request, @Valid @RequestBody MessageBoard messageBoard) {
+    public Map leaveMessage(@Valid @RequestBody MessageBoard messageBoard) {
         Map<String, Object> result = new HashMap<>();
         try {
             User user = userService.getUserByMobile(messageBoard.getMobile());
@@ -88,7 +88,7 @@ public class MessageBoardController {
     }
 
     /**
-     * 删除留言
+     * 删除留言(后期功能)
      *
      * @param messageBoard
      * @return

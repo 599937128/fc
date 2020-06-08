@@ -83,7 +83,6 @@ public class MessageBoardServiceImpl implements MessageBoardService {
 
     @Override
     public List<MessageBoard> getMessageList() {
-        messageBoardMapper.getMessageList();
-        return null;
+        return  messageBoardMapper.getMessageList();
     }
 }

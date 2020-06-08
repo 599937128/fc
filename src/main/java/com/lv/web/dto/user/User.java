@@ -35,5 +35,5 @@ public class User {
     /**
      * 用户头像id
      */
-    private String headImgId;
+    private String headImgUrl;
 }

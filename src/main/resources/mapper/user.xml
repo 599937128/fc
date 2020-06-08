@@ -7,13 +7,14 @@
         <result property="name" column="NAME" jdbcType="VARCHAR"/>
         <result property="mobile" column="MOBILE" jdbcType="VARCHAR"/>
         <result property="pwd" column="PWD" jdbcType="VARCHAR"/>
+        <result property="headImgUrl" column="PWD" jdbcType="VARCHAR"/>
         <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="TUserMap">
         select
-          ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_ID
+          ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_URL
         from T_USER
         where ID = #{id}
     </select>
@@ -21,7 +22,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TUserMap">
         select
-          ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_ID
+          ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_URL
         from T_USER
         limit #{offset}, #{limit}
     </select>
@@ -29,7 +30,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TUserMap">
         select
-        ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_ID
+        ID, NAME, MOBILE, PWD, CREATE_TIME, HEAD_IMG_URL
         from T_USER
         <where>
             <if test="id != null">
@@ -52,8 +53,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into T_USER(NAME, MOBILE, PWD, CREATE_TIME , HEAD_IMG_ID)
-        values (#{name}, #{mobile}, #{pwd}, #{createTime}, #{headImgId})
+        insert into T_USER(NAME, MOBILE, PWD, CREATE_TIME , HEAD_IMG_URL)
+        values (#{name}, #{mobile}, #{pwd}, #{createTime}, #{headImgUrl})
     </insert>
 
     <!--通过主键修改数据-->
@@ -72,8 +73,8 @@
             <if test="createTime != null">
                 CREATE_TIME = #{createTime},
             </if>
-            <if test="headImgId != null and headImgId != ''">
-                HEAD_IMG_ID = #{headImgId},
+            <if test="headImgUrl != null and headImgUrl != ''">
+                HEAD_IMG_URL = #{headImgUrl},
             </if>
         </trim>
         where ID = #{id}

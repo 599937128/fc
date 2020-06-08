@@ -28,7 +28,7 @@ public class SessionFilter implements Filter {
             "/kaptcha/default",
             "/user/register",
             "/message/list",
-            "message/leave"
+            "/message/leave"
     };
 
     @Override

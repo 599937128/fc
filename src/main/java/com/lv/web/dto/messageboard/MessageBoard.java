@@ -37,13 +37,17 @@ public class MessageBoard implements Serializable {
     private String createTime;
 
     /**
-     * 被留言的用户id
-     */
-    private String headImgId;
-
-    /**
      * 手机
      */
     private String mobile;
+    /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
+     * 用户头像信息
+     */
+    private String headImgUrl;
 
 }

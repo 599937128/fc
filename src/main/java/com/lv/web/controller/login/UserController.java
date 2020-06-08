@@ -55,7 +55,7 @@ public class UserController {
     }
 
     /**
-     * 用户更新
+     * 用户更新(后期功能)
      *
      * @param user
      * @return
@@ -78,7 +78,7 @@ public class UserController {
     }
 
     /**
-     * 用户信息获取
+     * 用户信息获取(后期功能)
      *
      * @param user
      * @return
