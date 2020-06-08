@@ -88,6 +88,7 @@
         select
         B.ID, B.USER_ID, B.CONTENT, B.CREATE_TIME, U.HEAD_IMG_URL, U.NAME USER_NAME
         from T_MESSAGE_BOARD B left join T_USER U on B.USER_ID = U.ID
+        order by CREATE_TIME desc
     </select>
 
 
